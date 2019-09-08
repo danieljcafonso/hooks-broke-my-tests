@@ -1,7 +1,6 @@
 import React from "react";
-import CounterContainer from "../container/CounterContainer";
-
+import CounterComponent from '../components/Counter'
 const Counter = () => {
-	return <CounterContainer />;
+	return <CounterComponent />;
 };
 export default Counter;

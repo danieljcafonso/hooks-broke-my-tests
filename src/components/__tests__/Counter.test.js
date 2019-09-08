@@ -1,57 +1,43 @@
-import React from 'react';
-import { shallow } from 'enzyme';
-import Counter from '../Counter'
+import React from "react";
+import { render, fireEvent } from "@testing-library/react";
+import "@testing-library/jest-dom/extend-expect";
 
-describe('Counter', () => {
-    const increment = jest.fn();
-    const decrement = jest.fn();
-    const props = {
-        counter: 0,
-        increment,
-        decrement,
-    }
-    test('should render Counter', () => {
-        const component = shallow(<Counter {...props} />)
-        expect(component).toMatchSnapshot();
-    });
+import Counter from "../Counter";
 
+describe("Counter", () => {
 
-    test('h2 should have default value', () => {
-        const component = shallow(<Counter {...props} />)
-        expect(component.find('h2').text()).toBe("0")
-    });
+	test("should render Counter", () => {
+		const { container } = render(<Counter />);
+		expect(container).toMatchSnapshot();
+	});
 
-    test('incrementButton should have default value', () => {
-        const component = shallow(<Counter {...props} />)
-        expect(component.find('.incrementButton').text().trim()).toBe("+1")
-    });
+	test("should have default value", () => {
+		const { container } = render(<Counter />);
+		const text = container.firstChild;
+		expect(text).toHaveTextContent("0");
+	});
 
-    test('decrementButton should have default value', () => {
-        const component = shallow(<Counter {...props} />)
-        expect(component.find('.decrementButton').text().trim()).toBe("-1")
-    });
+	test("incrementButton should have default value", () => {
+		const { getByText } = render(<Counter />);
+		expect(getByText("+1")).toBeInTheDocument();
+	});
 
-    test('should call increment button onClick ', () => {
-        const component = shallow(<Counter {...props} />)
-        component.find('.incrementButton').simulate('click')
-        expect(increment).toHaveBeenCalledTimes(1)
-    });
+	test("decrementButton should have default value", () => {
+		const { getByText } = render(<Counter />);
+		expect(getByText("-1")).toBeInTheDocument();
+	});
 
-    test('should call decrement button onClick ', () => {
-        const component = shallow(<Counter {...props} />)
-        component.find('.decrementButton').simulate('click')
-        expect(decrement).toHaveBeenCalledTimes(1)
-    });
+	test("should call increment button onClick ", () => {
+		const { getByText, container } = render(<Counter />);
+		const text = container.firstChild;
+		fireEvent.click(getByText("+1"));
+		expect(text).toHaveTextContent("1");
+	});
 
-    test('counter should be 0 ', () => {
-        const component = shallow(<Counter {...props} />)
-        expect(component.state().counter).toBe(0)
-    });
-
-    test('h2 value should change on state change ', () => {
-        const component = shallow(<Counter {...props} />)
-        component.setState({counter: 1})
-        expect(component.state().counter).toBe(1)
-        expect(component.find('h2').text()).toBe("1")
-    });
+	test("should call decrement button onClick ", () => {
+		const { getByText, container } = render(<Counter />);
+		const text = container.firstChild;
+		fireEvent.click(getByText("-1"));
+		expect(text).toHaveTextContent("-1");
+	});
 });
