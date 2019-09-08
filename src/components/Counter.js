@@ -1,40 +1,15 @@
-import React, { Component } from "react";
+import React from "react";
+import {useCounterContext} from '../context/CounterContext'
 
-class Counter extends Component {
-	constructor(props){
-		super(props)
-		this.state = {
-			counter: this.props.counter
-		}
-		this.increment = this.increment.bind(this)
-		this.decrement = this.decrement.bind(this)
-	}
-	
-	increment(){
-		this.props.increment()
-		this.setState({
-			counter: this.props.counter
-		})
-	}
-
-	decrement(){
-		this.props.decrement()
-		this.setState({
-			counter: this.props.counter
-		})
-	}
-
-	render() {
-        
-		return (
-			<div>
-				<h2>{this.state.counter}</h2>
-				<button className="incrementButton" onClick={this.increment}> +1 </button>
-                <button className="decrementButton" onClick={this.decrement}> -1 </button>
-
-			</div>
-		);
-	}
+const Counter = () => {
+	const {counter, increment, decrement} = useCounterContext()
+	return (
+		<div>
+			<h2>{counter}</h2>
+			<button className="incrementButton" onClick={increment}> +1 </button>
+			<button className="decrementButton" onClick={decrement}> -1 </button>
+		</div>
+	);
 }
 
 export default Counter;

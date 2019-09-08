@@ -1,13 +1,9 @@
 import {
 	COUNTER_INCREMENT,
 	COUNTER_DECREMENT
-} from "../constants/counterConstants";
+} from "./counterTypes"
 
-const initialState = {
-	counter: 0
-};
-
-export function counter(state = initialState, { type }) {
+export default (state, { type }) => {
 	switch (type) {
 		case COUNTER_INCREMENT:
 			return {
@@ -17,7 +13,6 @@ export function counter(state = initialState, { type }) {
 			return {
 				counter: state.counter - 1
 			};
-
 		default:
 			return state;
 	}
