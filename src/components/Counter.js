@@ -4,23 +4,21 @@ class Counter extends Component {
 	constructor(props){
 		super(props)
 		this.state = {
-			counter: this.props.counter
+			counter: 0
 		}
 		this.increment = this.increment.bind(this)
 		this.decrement = this.decrement.bind(this)
 	}
 	
 	increment(){
-		this.props.increment()
 		this.setState({
-			counter: this.props.counter
+			counter: this.state.counter + 1
 		})
 	}
 
 	decrement(){
-		this.props.decrement()
 		this.setState({
-			counter: this.props.counter
+			counter: this.state.counter - 1
 		})
 	}
 
